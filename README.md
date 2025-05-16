@@ -13,4 +13,8 @@ URL koneksi "amqp://guest:guest@localhost:5672" yang sama antara publisher dan s
 - Keduanya menggunakan port standar AMQP (5672)
 - Keduanya menggunakan kredensial yang sama (username: guest, password: guest)
 
-Ini memungkinkan komunikasi tidak langsung antara publisher dan subscriber melalui message broker yang sama. Publisher mengirim pesan ke broker, dan subscriber menerima pesan dari broker yang sama, sehingga menciptakan sistem komunikasi asinkron yang terdekopel. 
+Ini memungkinkan komunikasi tidak langsung antara publisher dan subscriber melalui message broker yang sama. Publisher mengirim pesan ke broker, dan subscriber menerima pesan dari broker yang sama, sehingga menciptakan sistem komunikasi asinkron yang terdekopel.
+
+## Screenshot RabbitMQ yang Berjalan
+
+![RabbitMQ Management Interface](images/chrome_Fst0z3jVGw.png) 
