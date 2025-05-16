@@ -30,4 +30,11 @@ Screenshot ini menampilkan terminal saat menjalankan program subscriber dengan p
 ### Terminal Saat Menjalankan Publisher
 ![Publisher Terminal](images/Cursor_hf8ubWAXVO.png)
 
-Screenshot ini menunjukkan terminal yang digunakan untuk menjalankan program publisher dengan perintah `cargo run` beberapa kali. Output menampilkan proses kompilasi dan eksekusi program publisher. Program berjalan dengan sukses, meskipun ada beberapa peringatan terkait kompatibilitas paket nom v4.2.3 dengan versi Rust di masa depan. Tidak ada output yang menampilkan detail pesan yang dikirim karena publisher tidak mencetak informasi tersebut ke terminal, tetapi program telah berhasil mengirim 5 pesan UserCreatedEventMessage ke RabbitMQ. 
+Screenshot ini menunjukkan terminal yang digunakan untuk menjalankan program publisher dengan perintah `cargo run` beberapa kali. Output menampilkan proses kompilasi dan eksekusi program publisher. Program berjalan dengan sukses, meskipun ada beberapa peringatan terkait kompatibilitas paket nom v4.2.3 dengan versi Rust di masa depan. Tidak ada output yang menampilkan detail pesan yang dikirim karena publisher tidak mencetak informasi tersebut ke terminal, tetapi program telah berhasil mengirim 5 pesan UserCreatedEventMessage ke RabbitMQ.
+
+### Grafik Message Rates di RabbitMQ Management
+![Message Rates Chart](images/chrome_fGZ8M5lGnG.png)
+
+Screenshot ini menampilkan grafik "Message rates" pada RabbitMQ Management Interface yang menunjukkan dua lonjakan (spike) pada grafik yang berwarna ungu. Lonjakan ini terjadi karena program publisher dijalankan dua kali secara berurutan. Setiap kali program publisher dijalankan, program tersebut mengirim 5 pesan ke message broker dalam waktu yang sangat singkat, sehingga menyebabkan lonjakan pada grafik throughput pesan.
+
+Grafik ungu ini mewakili "Consumer ack", yang berarti bahwa pesan-pesan yang dikirim oleh publisher berhasil diterima dan di-acknowledge oleh consumer (dalam hal ini, program subscriber). Tinggi dari masing-masing lonjakan menunjukkan kecepatan/rate pemrosesan pesan per detik. Hal ini membuktikan bahwa komunikasi asinkron antara publisher dan subscriber melalui RabbitMQ berhasil dilakukan dengan baik, dan memvisualisasikan bagaimana message broker menangani burst traffic ketika publisher mengirimkan banyak pesan dalam waktu singkat. 
