@@ -37,4 +37,12 @@ Screenshot ini menunjukkan terminal yang digunakan untuk menjalankan program pub
 
 Screenshot ini menampilkan grafik "Message rates" pada RabbitMQ Management Interface yang menunjukkan dua lonjakan (spike) pada grafik yang berwarna ungu. Lonjakan ini terjadi karena program publisher dijalankan dua kali secara berurutan. Setiap kali program publisher dijalankan, program tersebut mengirim 5 pesan ke message broker dalam waktu yang sangat singkat, sehingga menyebabkan lonjakan pada grafik throughput pesan.
 
-Grafik ungu ini mewakili "Consumer ack", yang berarti bahwa pesan-pesan yang dikirim oleh publisher berhasil diterima dan di-acknowledge oleh consumer (dalam hal ini, program subscriber). Tinggi dari masing-masing lonjakan menunjukkan kecepatan/rate pemrosesan pesan per detik. Hal ini membuktikan bahwa komunikasi asinkron antara publisher dan subscriber melalui RabbitMQ berhasil dilakukan dengan baik, dan memvisualisasikan bagaimana message broker menangani burst traffic ketika publisher mengirimkan banyak pesan dalam waktu singkat. 
+Grafik ungu ini mewakili "Consumer ack", yang berarti bahwa pesan-pesan yang dikirim oleh publisher berhasil diterima dan di-acknowledge oleh consumer (dalam hal ini, program subscriber). Tinggi dari masing-masing lonjakan menunjukkan kecepatan/rate pemrosesan pesan per detik. Hal ini membuktikan bahwa komunikasi asinkron antara publisher dan subscriber melalui RabbitMQ berhasil dilakukan dengan baik, dan memvisualisasikan bagaimana message broker menangani burst traffic ketika publisher mengirimkan banyak pesan dalam waktu singkat.
+
+### Simulasi Antrian Pesan saat Subscriber Lambat
+![Queued Messages](images/chrome_e6RnKd8kAd.png)
+
+
+Pada simulasi ini, subscriber dibuat lambat dengan menambahkan delay 1 detik untuk setiap proses. Hasilnya dapat dilihat pada screenshot di atas. Hal ini menunjukkan bahwa producer dapat terus mengirim permintaan, dan permintaan tersebut (sebagai event) ditempatkan dalam antrian pesan. Secara perlahan, consumer akan memprosesnya satu per satu.
+
+Pada grafik "Queued messages", terlihat lonjakan jumlah pesan yang tertunda dalam antrian (36 pesan) yang belum diproses (Unacked). Grafik "Message rates" menunjukkan garis merah yang tinggi, yang merepresentasikan tingkat publish yang tinggi, sementara garis ungu (consumer ack) tetap rendah karena subscriber memproses pesan dengan lambat. Ini adalah contoh sempurna bagaimana message broker dapat berfungsi sebagai buffer antara sistem yang memiliki kecepatan pemrosesan berbeda, mencegah kehilangan data dan kegagalan sistem saat terjadi lonjakan beban. 
